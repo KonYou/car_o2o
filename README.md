@@ -3,15 +3,31 @@
 #### 介绍
 在wolfcode学习的第一个项目，car_o2o项目，仅供学习，如有侵权马上删
 
-#### 软件架构
-软件架构说明
+#### 技术选型
 
+​	主框架：Spring Boot 2.4.3 + springframework 2.4.3 +  Apache Shiro 1.8.0
 
-#### 安装教程
+​	持久层：mybatis 2.2.0 + Alibaba Druid 1.2.6 + mysql 8.0.23
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+​	视图层：Bootstrap 3.3.7 + thymeleaf 2.5.4
+
+​	其他插件：
+
+​		分页插件 ：pagehelper 1.3.0 
+
+​		阿里JSON解析器 ：fastjson 1.2.78 
+
+​		文件上传工具类： commons-fileupload 1.3.3 
+
+​		excel工具 ：poi-ooxml 4.1.2
+
+ 		获取系统信息 ：oshi-core 5.6.0 
+
+​		解析客户端操作系统、浏览器等 ：UserAgentUtils 1.21 
+
+​		日志：log4j 2.13.3		 
+
+​		lombok 1.18.20 + 
 
 #### 使用说明
 
