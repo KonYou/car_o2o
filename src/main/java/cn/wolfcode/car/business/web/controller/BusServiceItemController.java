@@ -1,0 +1,103 @@
+package cn.wolfcode.car.business.web.controller;
+
+
+import cn.wolfcode.car.business.domain.BusServiceItem;
+import cn.wolfcode.car.business.query.BusServiceItemQuery;
+import cn.wolfcode.car.business.service.IBusServiceItemService;
+import cn.wolfcode.car.common.base.page.TablePageInfo;
+import cn.wolfcode.car.common.web.AjaxResult;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+/**
+ * 岗位控制器
+ */
+@Controller
+@RequestMapping("business/serviceItem")
+public class BusServiceItemController {
+    //模板前缀
+    private static final String prefix = "business/system/serviceItem/";
+
+    @Autowired
+    private IBusServiceItemService busServiceItemService;
+
+    //页面------------------------------------------------------------
+    //列表
+    @RequiresPermissions("system:serviceItem:view")
+    @RequestMapping("/listPage")
+    public String listPage(){
+        return prefix + "list";
+    }
+
+    @RequiresPermissions("system:serviceItem:add")
+    @RequestMapping("/addPage")
+    public String addPage(){
+        return prefix + "add";
+    }
+
+
+    @RequiresPermissions("system:serviceItem:edit")
+    @RequestMapping("/editPage")
+    public String editPage(Long id, Model model){
+        model.addAttribute("serviceItem", busServiceItemService.get(id));
+        return prefix + "edit";
+    }
+
+    //数据-----------------------------------------------------------
+    //列表
+    @RequiresPermissions("system:serviceItem:list")
+    @RequestMapping("/query")
+    @ResponseBody
+    public TablePageInfo<BusServiceItem> query(BusServiceItemQuery qo){
+        return busServiceItemService.query(qo);
+    }
+
+/*
+    //判断name是否唯一
+    @RequestMapping("/checkServiceItemNameUnique")
+    @ResponseBody
+    public String  checkServiceItemNameUnique(String name){
+        boolean ret = busServiceItemService.checkNameExsit(name);
+        return ret?"1":"0";
+    }
+
+    //判断code是否唯一
+    @RequestMapping("/checkServiceItemCodeUnique")
+    @ResponseBody
+    public String  checkServiceItemCodeUnique(String code){
+        boolean ret = busServiceItemService.checkCodeExsit(code);
+        return ret?"1":"0";
+    }
+*/
+
+    //新增
+    @RequiresPermissions("system:serviceItem:add")
+    @RequestMapping("/add")
+    @ResponseBody
+    public AjaxResult addSave(BusServiceItem serviceItem){
+        busServiceItemService.save(serviceItem);
+        return AjaxResult.success();
+    }
+
+    //编辑
+    @RequiresPermissions("system:serviceItem:edit")
+    @RequestMapping("/edit")
+    @ResponseBody
+    public AjaxResult edit(BusServiceItem serviceItem){
+        busServiceItemService.saveEdit(serviceItem);
+        return AjaxResult.success();
+    }
+
+    //删除
+    @RequiresPermissions("system:serviceItem:remove")
+    @RequestMapping("/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids){
+        busServiceItemService.deleteBatch(ids);
+        return AjaxResult.success();
+    }
+}
