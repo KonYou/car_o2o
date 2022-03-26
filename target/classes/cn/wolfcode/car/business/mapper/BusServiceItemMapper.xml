@@ -47,7 +47,13 @@
           service_catalog = #{serviceCatalog}
       where id = #{id}
     </update>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
+  <update id="takeDown">
+    update bus_service_item set sale_status = 0 where id = #{id}
+  </update>
+  <update id="shelfOn">
+    update bus_service_item set sale_status = 1 where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
     select id, name, original_price, discount_price, car_package, info, create_time, 
     service_catalog, audit_status, sale_status, version
     from bus_service_item
@@ -62,5 +68,22 @@
       select id, name, original_price, discount_price, car_package, info, create_time,
              service_catalog, audit_status, sale_status, version
       from bus_service_item
+    <where>
+        <if test="name != null and name != ''">
+            and name like concat('%',#{name},'%')
+        </if>
+         <if test="carPackage != null">
+            and car_package = #{carPackage}
+        </if>
+         <if test="serviceCatalog != null">
+            and service_catalog = #{serviceCatalog}
+        </if>
+         <if test="auditStatus != null">
+            and audit_status = #{auditStatus}
+        </if>
+         <if test="saleStatus != null">
+            and sale_status = #{saleStatus}
+        </if>
+    </where>
     </select>
 </mapper>

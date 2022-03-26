@@ -50,4 +50,8 @@ public interface IBusServiceItemService {
     List<BusServiceItem> list();
 
     void saveEdit(BusServiceItem serviceItem);
+
+    void takeDown(String id);
+
+    void shelfOn(String id);
 }

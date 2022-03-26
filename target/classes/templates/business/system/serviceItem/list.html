@@ -9,19 +9,43 @@
         <div class="col-sm-12 search-collapse">
             <form id="serviceItem-form">
                 <div class="select-list">
-                    <!--<ul>
+                    <ul>
                         <li>
                             服务名称：<input type="text" name="name"/>
                         </li>
                         <li>
-                            服务电话：<input type="text" name="phone"/>
+                            是否套餐：
+                            <select name="carPackage" th:with="type=${@dict.getType('si_car_package')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+                            </select>
                         </li>
-
+                        <li>
+                            服务分类：
+                            <select name="serviceCatalog" th:with="type=${@dict.getType('si_service_catalog')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+                            </select>
+                        </li>
+                        <li>
+                            审核状态：
+                            <select name="auditStatus" th:with="type=${@dict.getType('si_audit_status')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+                            </select>
+                        </li>
+                        <li>
+                            上架状态：
+                            <select name="saleStatus" th:with="type=${@dict.getType('si_sale_status')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+                            </select>
+                        </li>
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                             <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
                         </li>
-                    </ul>-->
+                    </ul>
                 </div>
             </form>
         </div>
@@ -50,14 +74,28 @@
 </div>
 <th:block th:include="common/include :: footer"/>
 <script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('system:serviceItem:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('system:serviceItem:remove')}]];
+    var editFlag = [[${@permission.hasPermi('system:serviceItem:edit')}]];//编辑权限
+    var removeFlag = [[${@permission.hasPermi('system:serviceItem:remove')}]];//删除权限
     var datas = [[${@dict.getType('sys_normal_disable')}]];
-    var carPackageDatas = [[${@dict.getType('si_car_package')}]];
-    var serviceCatalogDatas = [[${@dict.getType('si_service_catalog')}]];
-    var auditStatusDatas = [[${@dict.getType('si_audit_status')}]];
-    var saleStatusDatas = [[${@dict.getType('si_sale_status')}]];
+    var carPackageDatas = [[${@dict.getType('si_car_package')}]];//是不是套餐
+    var serviceCatalogDatas = [[${@dict.getType('si_service_catalog')}]];//服务分类
+    var auditStatusDatas = [[${@dict.getType('si_audit_status')}]];//审核状态
+    var saleStatusDatas = [[${@dict.getType('si_sale_status')}]];//上架状态
     var prefix = ctx + "/business/serviceItem";
+    //上架函数
+    function shelfOn(id) {
+        $.modal.confirm("确定上架此" + table.options.modalName + "吗？", function() {
+            $.operate.post(prefix + "/shelfOn",{id:id},function (result) {});
+        })
+    }
+
+    //下架函数
+    function takeDown(id){
+        $.modal.confirm("确定下架此" + table.options.modalName + "吗？", function() {
+        $.operate.post(prefix + "/takeDown",{id:id},function (result) {})
+        })
+    }
+
     $(function () {
         var options = {
             url: prefix + "/query",
@@ -130,18 +168,30 @@
                     align: 'center',
                     formatter: function (value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" ' +
+                        var ban = "";
+                        //审核状态中不可修改
+                        if (row.auditStatus == 1){
+                            ban += "disabled ";
+                        }
+                        //上架中不可修改
+                        if (row.saleStatus == 1){
+                            ban += "disabled ";
+                        }
+
+                        actions.push('<a class="btn btn-success btn-xs ' + ban + editFlag + '" href="javascript:void(0)" ' +
                             'onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)"' +
-                            ' onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-                        console.log(saleStatusDatas[0].status);
-                        return actions.join('');
+                            ' onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a> ');
 
-                        if (saleStatusDatas.value){
+                        //如果上架了就下架
+                        if (row.saleStatus){ //TODO:没做上架的权限控制
                             actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)"' +
-                                ' onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>dsfd</a>');
-                            return actions.join('');
+                                ' onclick="takeDown(\'' + row.id + '\')"><i class="glyphicon glyphicon-arrow-down"></i>下架</a> ');
+                        }else {//否则就上架 TODO:没做下架的权限控制
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)"' +
+                                ' onclick="shelfOn(\'' + row.id + '\')"><i class="glyphicon glyphicon-arrow-up"></i>上架</a> ');
                         }
+                        return actions.join('');
                     }
                 }]
         };

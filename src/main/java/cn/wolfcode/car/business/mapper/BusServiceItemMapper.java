@@ -20,4 +20,8 @@ public interface BusServiceItemMapper {
     List<BusServiceItem> selectForList(BusServiceItemQuery qo);
 
     int saveByPrimaryKey(BusServiceItem record);
+
+    void takeDown(int valueOf);
+
+    void shelfOn(int valueOf);
 }

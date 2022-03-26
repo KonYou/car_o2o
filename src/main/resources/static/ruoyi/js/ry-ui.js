@@ -1252,7 +1252,7 @@ var table = {
                     $.modal.alertError(result.msg);
                 }
                 $.modal.closeLoading();
-            }
+            },
         },
         // 校验封装处理
         validate: {

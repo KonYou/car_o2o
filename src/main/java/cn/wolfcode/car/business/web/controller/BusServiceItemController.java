@@ -6,6 +6,7 @@ import cn.wolfcode.car.business.query.BusServiceItemQuery;
 import cn.wolfcode.car.business.service.IBusServiceItemService;
 import cn.wolfcode.car.common.base.page.TablePageInfo;
 import cn.wolfcode.car.common.web.AjaxResult;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -98,6 +99,22 @@ public class BusServiceItemController {
     @ResponseBody
     public AjaxResult remove(String ids){
         busServiceItemService.deleteBatch(ids);
+        return AjaxResult.success();
+    }
+
+    @RequiresPermissions("system:serviceItem:shelfOn")
+    @RequestMapping("/shelfOn")
+    @ResponseBody
+    public AjaxResult shelfOn(String id){
+        busServiceItemService.shelfOn(id);
+        return AjaxResult.success();
+    }
+
+    @RequiresPermissions("system:serviceItem:takeDown")
+    @RequestMapping("/takeDown")
+    @ResponseBody
+    public AjaxResult takeDown(String id){
+        busServiceItemService.takeDown(id);
         return AjaxResult.success();
     }
 }

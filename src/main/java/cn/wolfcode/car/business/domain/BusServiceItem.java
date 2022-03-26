@@ -36,7 +36,7 @@ public class BusServiceItem {
     private BigDecimal discountPrice;
 
     /** 是否套餐【是/否】*/
-    private Byte carPackage;
+    private Integer carPackage;
 
     /** 备注信息*/
     private String info;
