@@ -188,7 +188,7 @@
                             actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)"' +
                                 ' onclick="takeDown(\'' + row.id + '\')"><i class="glyphicon glyphicon-arrow-down"></i>下架</a> ');
                         }else {//否则就上架 TODO:没做下架的权限控制
-                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)"' +
+                            actions.push('<a class="btn btn-info btn-xs ' + editFlag + '" href="javascript:void(0)"' +
                                 ' onclick="shelfOn(\'' + row.id + '\')"><i class="glyphicon glyphicon-arrow-up"></i>上架</a> ');
                         }
                         return actions.join('');

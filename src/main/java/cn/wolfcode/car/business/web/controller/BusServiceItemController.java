@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Date;
 
 /**
- * 岗位控制器
+ *
  */
 @Controller
 @RequestMapping("business/serviceItem")
@@ -58,6 +58,14 @@ public class BusServiceItemController {
     @RequestMapping("/query")
     @ResponseBody
     public TablePageInfo<BusServiceItem> query(BusServiceItemQuery qo){
+        return busServiceItemService.query(qo);
+    }
+
+    @RequiresPermissions("system:serviceItem:selectAllSaleOnList")
+    @RequestMapping("/selectAllSaleOnList")
+    @ResponseBody
+    public TablePageInfo<BusServiceItem> selectAllSaleOnList(BusServiceItemQuery qo){
+        qo.setSaleStatus(BusServiceItem.SALESTATUS_ON); //上架
         return busServiceItemService.query(qo);
     }
 

@@ -81,7 +81,7 @@
 				value=""/> -->
 		</javaClientGenerator>
 
-		<table tableName="bus_service_item" domainObjectName="busServiceItem">
+		<table tableName="bus_statement_item" domainObjectName="StatementItem">
 			<!-- 使用数据库真实的列名作为实体类字段名 true
 			 	 改成false之后, 会自动检测是否有下划线,如果有会自动转为驼峰
 			 -->
