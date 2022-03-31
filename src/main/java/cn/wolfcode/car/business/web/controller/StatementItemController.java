@@ -40,26 +40,27 @@ public class StatementItemController {
 
     //页面------------------------------------------------------------
     //列表
-    @RequiresPermissions("system:statementItem:view")
+    @RequiresPermissions("system:statementItem:listPage")
     @RequestMapping("/listPage")
     public String listPage(){
         return prefix + "list";
     }
 
-    @RequiresPermissions("system:statementItem:add")
+    @RequiresPermissions("system:statementItem:addPage")
     @RequestMapping("/addPage")
     public String addPage(){
         return prefix + "add";
     }
 
 
-    @RequiresPermissions("system:statementItem:edit")
+    @RequiresPermissions("system:statementItem:editPage")
     @RequestMapping("/editPage")
     public String editPage(Long id, Model model){
         model.addAttribute("statementItem", statementItemService.get(id));
         return prefix + "edit";
     }
 
+    //TODO: woko,这啥呀
     @RequiresPermissions("system:statementItem:itemDetail")
     @RequestMapping("/itemDetail")
     public String itemDetail(Long statementId,Model model){
@@ -78,7 +79,7 @@ public class StatementItemController {
 
     //数据-----------------------------------------------------------
     //列表
-    @RequiresPermissions("system:statementItem:list")
+    @RequiresPermissions("system:statementItem:query")
     @RequestMapping("/query")
     @ResponseBody
     public TablePageInfo<StatementItem> query(StatementItemQuery qo){

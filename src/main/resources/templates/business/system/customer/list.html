@@ -83,10 +83,7 @@
 					field: 'age',
 					title: '年龄段',
 					align: 'center',
-					formatter: function(value, row, index) {
-						console.log(value, datas);
-						return value < 18 ? '未成年': value < 40 ? '年轻人': value < 60 ? '成功人士': value < 80 ? '退休老人':'宝';
-					}
+					sortable:true
 				},
 
 		        {

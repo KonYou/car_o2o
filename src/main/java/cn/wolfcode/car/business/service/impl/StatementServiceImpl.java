@@ -30,16 +30,14 @@ public class StatementServiceImpl implements IStatementService {
     //修改
     @Override
     public void saveEdit(Statement statement) {
-       
-            Statement s = statementMapper.selectByPrimaryKey(statement.getId());
+        Statement s = statementMapper.selectByPrimaryKey(statement.getId());
 
-            if (Statement.STATUS_CONSUME.equals(s.getStatus())){
-                statementMapper.statementModification(statement);
-                return;
-            }
+        if (Statement.STATUS_CONSUME.equals(s.getStatus())) {
+            statementMapper.statementModification(statement);
+            return;
+        }
 
-            throw new BusinessException("消费中的客户才可以修改！");
-        
+        throw new BusinessException("消费中的客户才可以修改！");
     }
 
     @Override
@@ -74,6 +72,8 @@ public class StatementServiceImpl implements IStatementService {
         }
     }
 
+    //TODO: 好吧，代码量多的看着都怕
+    /**生成结算单*/
     @Override
     public Statement generateStatement(Long appointmentId) {
         //如果到店了===创建结算单 跳转到editDetail.html
@@ -81,7 +81,7 @@ public class StatementServiceImpl implements IStatementService {
         //存在了拿出来,没有就创建拿出来
         Appointment appointment = appointmentMapper.selectByPrimaryKey(appointmentId);
         Statement statement = new Statement();
-        if (Appointment.STATUS_ARRIVAL.equals(appointment.getStatus())){
+        if (Appointment.STATUS_ARRIVAL.equals(appointment.getStatus())) {
             //到店,创建结算单
             statement.setCustomerName(appointment.getCustomerName());
             statement.setCustomerPhone(appointment.getCustomerPhone());
@@ -90,16 +90,16 @@ public class StatementServiceImpl implements IStatementService {
             statement.setLicensePlate(appointment.getLicensePlate());
             statement.setCarSeries(appointment.getCarSeries());
             statement.setInfo(appointment.getInfo());
-            statement.setServiceType(appointment.getServiceType()+0L);
+            statement.setServiceType(appointment.getServiceType() + 0L);
             statement.setStatus(Statement.STATUS_CONSUME);
 
             statementMapper.generateInsert(statement);
 
             //修改预约状态:结算单生成
-            appointmentMapper.changeStatus(appointmentId,Appointment.STATUS_SETTLE);
-        }else {
+            appointmentMapper.changeStatus(appointmentId, Appointment.STATUS_SETTLE);
+        } else {
             //查询结算单
-            statement=statementMapper.queryByAppointmentId(appointmentId);
+            statement = statementMapper.queryByAppointmentId(appointmentId);
         }
 
         return statement;

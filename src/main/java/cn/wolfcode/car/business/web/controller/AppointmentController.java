@@ -34,20 +34,20 @@ public class AppointmentController {
 
     //页面------------------------------------------------------------
     //列表
-    @RequiresPermissions("system:appointment:view")
+    @RequiresPermissions("system:appointment:listPage")
     @RequestMapping("/listPage")
     public String listPage(){
         return prefix + "list";
     }
 
-    @RequiresPermissions("system:appointment:add")
+    @RequiresPermissions("system:appointment:addPage")
     @RequestMapping("/addPage")
     public String addPage(){
         return prefix + "add";
     }
 
 
-    @RequiresPermissions("system:appointment:edit")
+    @RequiresPermissions("system:appointment:editPage")
     @RequestMapping("/editPage")
     public String editPage(Long id, Model model){
         model.addAttribute("appointment", appointmentService.get(id));
@@ -56,7 +56,7 @@ public class AppointmentController {
 
     //数据-----------------------------------------------------------
     //列表
-    @RequiresPermissions("system:appointment:list")
+    @RequiresPermissions("system:appointment:query")
     @RequestMapping("/query")
     @ResponseBody
     public TablePageInfo<Appointment> query(AppointmentQuery qo){
@@ -108,7 +108,7 @@ public class AppointmentController {
         return AjaxResult.success();
     }
 
-
+    //TODO:这里绕来绕去的有点难理解
     //预约单转成结算单
     @RequiresPermissions("system:appointment:generateStatement")
     @RequestMapping("/generateStatement")

@@ -111,7 +111,8 @@
 
 ### @ConfigurationProperties
 
-​	Spring Boot将尝试校验外部的配置，默认使用JSR-303（如果在classpath路径中）。你可以轻松的为你的@ConfigurationProperties 类添加JSR-303 javax.validation约束注解
+​	Spring Boot将尝试校验外部的配置，默认使用JSR-303（如果在classpath路径中）。你可以轻松的为你的@ConfigurationProperties 类添加JSR-303 javax.validation约束注解。
+        导入配置文件，批量绑定配置参数，与@Value类似，一个批量绑定一个单个绑定
 
 ### @Param
 

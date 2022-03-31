@@ -65,6 +65,8 @@ public class StatementItemServiceImpl implements IStatementItemService {
         }
     }
 
+    //TODO: 难啊难
+    /** 模拟支付 */
     @Override
     public void payStatement(Long statementId) {
         //确认支付-支付成功
@@ -82,6 +84,7 @@ public class StatementItemServiceImpl implements IStatementItemService {
 
     }
 
+    //TODO: 难啊，难
     @Override
     public void saveItems(List<StatementItem> items) {
         if (items != null){

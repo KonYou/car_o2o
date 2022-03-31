@@ -27,20 +27,20 @@ public class CustomerController {
 
     //页面------------------------------------------------------------
     //列表
-    @RequiresPermissions("system:customer:view")
+    @RequiresPermissions("system:customer:listPage")
     @RequestMapping("/listPage")
     public String listPage(){
         return prefix + "list";
     }
 
-    @RequiresPermissions("system:customer:add")
+    @RequiresPermissions("system:customer:addPage")
     @RequestMapping("/addPage")
     public String addPage(){
         return prefix + "add";
     }
 
 
-    @RequiresPermissions("system:customer:edit")
+    @RequiresPermissions("system:customer:editPage")
     @RequestMapping("/editPage")
     public String editPage(Long id, Model model){
         model.addAttribute("customer", customerService.get(id));
@@ -49,7 +49,7 @@ public class CustomerController {
 
     //数据-----------------------------------------------------------
     //列表
-    @RequiresPermissions("system:customer:list")
+    @RequiresPermissions("system:customer:query")
     @RequestMapping("/query")
     @ResponseBody
     public TablePageInfo<Customer> query(CustomerQuery qo){
@@ -75,7 +75,7 @@ public class CustomerController {
 */
 
     //新增
-    @RequiresPermissions("system:customer:add")
+    @RequiresPermissions("system:customer:addSave")
     @RequestMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Customer customer){

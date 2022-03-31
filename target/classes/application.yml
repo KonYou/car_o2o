@@ -63,6 +63,13 @@ spring:
     # 国际化资源文件路径
     basename: static/i18n/messages
 
+  # activiti 配置工作流框架
+  activiti:
+    database-schema-update: true
+    db-history-used: true
+    history-level: full
+    check-process-definitions: false
+    use-strong-uuids: false
 
 #pagehelper配置#################################################
 pagehelper:

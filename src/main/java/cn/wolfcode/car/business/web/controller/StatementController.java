@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Date;
 
 /**
- * 岗位控制器
+ *
  */
 @Controller
 @RequestMapping("business/statement")
@@ -29,20 +29,20 @@ public class StatementController {
 
     //页面------------------------------------------------------------
     //列表
-    @RequiresPermissions("system:statement:view")
+    @RequiresPermissions("system:statement:listPage")
     @RequestMapping("/listPage")
     public String listPage(){
         return prefix + "list";
     }
 
-    @RequiresPermissions("system:statement:add")
+    @RequiresPermissions("system:statement:addPage")
     @RequestMapping("/addPage")
     public String addPage(){
         return prefix + "add";
     }
 
 
-    @RequiresPermissions("system:statement:edit")
+    @RequiresPermissions("system:statement:editPage")
     @RequestMapping("/editPage")
     public String editPage(Long id, Model model){
         model.addAttribute("statement", statementService.get(id));
@@ -51,7 +51,7 @@ public class StatementController {
 
     //数据-----------------------------------------------------------
     //列表
-    @RequiresPermissions("system:statement:list")
+    @RequiresPermissions("system:statement:query")
     @RequestMapping("/query")
     @ResponseBody
     public TablePageInfo<Statement> query(StatementQuery qo){

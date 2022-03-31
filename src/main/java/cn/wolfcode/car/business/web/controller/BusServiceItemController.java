@@ -32,20 +32,20 @@ public class BusServiceItemController {
 
     //页面------------------------------------------------------------
     //列表
-    @RequiresPermissions("system:serviceItem:view")
+    @RequiresPermissions("system:serviceItem:listPage")
     @RequestMapping("/listPage")
     public String listPage(){
         return prefix + "list";
     }
 
-    @RequiresPermissions("system:serviceItem:add")
+    @RequiresPermissions("system:serviceItem:addPage")
     @RequestMapping("/addPage")
     public String addPage(){
         return prefix + "add";
     }
 
 
-    @RequiresPermissions("system:serviceItem:edit")
+    @RequiresPermissions("system:serviceItem:editPage")
     @RequestMapping("/editPage")
     public String editPage(Long id, Model model){
         model.addAttribute("serviceItem", busServiceItemService.get(id));
@@ -54,7 +54,7 @@ public class BusServiceItemController {
 
     //数据-----------------------------------------------------------
     //列表
-    @RequiresPermissions("system:serviceItem:list")
+    @RequiresPermissions("system:serviceItem:query")
     @RequestMapping("/query")
     @ResponseBody
     public TablePageInfo<BusServiceItem> query(BusServiceItemQuery qo){
@@ -88,7 +88,7 @@ public class BusServiceItemController {
 */
 
     //新增
-    @RequiresPermissions("system:serviceItem:add")
+    @RequiresPermissions("system:serviceItem:addSave")
     @RequestMapping("/add")
     @ResponseBody
     public AjaxResult addSave(BusServiceItem serviceItem){

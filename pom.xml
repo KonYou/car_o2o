@@ -85,14 +85,14 @@
 
 
         <!-- shiro 权限管理 -->
-       <dependency>
+        <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring-boot-web-starter</artifactId>
             <version>1.8.0</version>
         </dependency>
 
         <!-- thymeleaf模板引擎和shiro框架的整合 -->
-       <dependency>
+        <dependency>
             <groupId>com.github.theborakompanioni</groupId>
             <artifactId>thymeleaf-extras-shiro</artifactId>
             <version>2.0.0</version>
@@ -145,9 +145,25 @@
             <version>1.21</version>
         </dependency>
 
- 
-
-
+        <!--添加activiti和SpringBoot整合的依赖
+    MyBatis版本会有冲突，所以需要排除-->
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring-boot-starter</artifactId>
+            <version>7.0.0.SR1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>mybatis</artifactId>
+                    <groupId>org.mybatis</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--activiti可以绘制流程的的依赖-->
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-image-generator</artifactId>
+            <version>7.0.0.SR1</version>
+        </dependency>
     </dependencies>
 
 
