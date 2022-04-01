@@ -1,9 +1,13 @@
 package cn.wolfcode.car.business.web.controller;
 
 
+import cn.wolfcode.car.base.domain.User;
+import cn.wolfcode.car.base.service.IUserService;
+import cn.wolfcode.car.business.domain.BpmnInfo;
 import cn.wolfcode.car.business.domain.BusServiceItem;
 import cn.wolfcode.car.business.query.BusServiceItemQuery;
 import cn.wolfcode.car.business.service.IBusServiceItemService;
+import cn.wolfcode.car.business.service.impl.BpmnInfoServiceImpl;
 import cn.wolfcode.car.common.base.page.TablePageInfo;
 import cn.wolfcode.car.common.util.DateUtils;
 import cn.wolfcode.car.common.web.AjaxResult;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -29,6 +34,12 @@ public class BusServiceItemController {
 
     @Autowired
     private IBusServiceItemService busServiceItemService;
+
+    @Autowired
+    private BpmnInfoServiceImpl bpmnInfoService;
+
+    @Autowired
+    private IUserService userService;
 
     //页面------------------------------------------------------------
     //列表
@@ -129,4 +140,33 @@ public class BusServiceItemController {
         busServiceItemService.takeDown(id);
         return AjaxResult.success();
     }
+
+
+    //跳转到发起套餐审核
+    @RequiresPermissions("system:serviceItem:auditPage")
+    @RequestMapping("/auditPage")
+    public String auditPage(Long id, Model model){
+        model.addAttribute("serviceItem",busServiceItemService.get(id));
+
+        //店长
+        List<User> shopOwner = userService.queryByRoleKey("shopOwner");
+        model.addAttribute("directors",shopOwner);
+
+        //财务
+        List<User> financial = userService.queryByRoleKey("financial");
+        model.addAttribute("finances",financial);
+
+        //这里约定流程部署只能部署一个
+        BpmnInfo bpmnInfo = bpmnInfoService.queryByType("car_package");
+        model.addAttribute("bpmnInfo",bpmnInfo);
+        return prefix + "audit";
+    }
+
+    @RequestMapping("/startAudit")
+    @ResponseBody
+    public AjaxResult startAudit(Long id,Long bpmnInfoId,Long director,Long finance,String info){
+        busServiceItemService.startAudit(id, bpmnInfoId, director, finance, info);
+        return AjaxResult.success();
+    }
+
 }

@@ -11,22 +11,26 @@
     <sequenceFlow id="_9" sourceRef="_3" targetRef="_4"/>
     <sequenceFlow id="_10" name="审核拒绝" sourceRef="_4" targetRef="_7">
       <conditionExpression xsi:type="tFormalExpression">
-        <![CDATA[${auditStatus!=2}]]>
+        <![CDATA[
+        ]]>
       </conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_11" name="审核通过" sourceRef="_4" targetRef="_5">
       <conditionExpression xsi:type="tFormalExpression">
-        <![CDATA[${auditStatus==2}]]>
+        <![CDATA[
+        ]]>
       </conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_12" name="折扣价&gt;=3000" sourceRef="_5" targetRef="_6">
       <conditionExpression xsi:type="tFormalExpression">
-        <![CDATA[${discountPrice>=3000}]]>
+        <![CDATA[
+        ]]>
       </conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_13" name="折扣价&lt;3000" sourceRef="_5" targetRef="_7">
       <conditionExpression xsi:type="tFormalExpression">
-        <![CDATA[${discountPrice<3000}]]>
+        <![CDATA[
+        ]]>
       </conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_14" sourceRef="_6" targetRef="_7"/>

@@ -62,8 +62,8 @@
                shiro:hasPermission="system:serviceItem:remove">
                 <i class="fa fa-remove"></i> 删除
             </a>
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:serviceItem:export">
-                <i class="fa fa-download"></i> 导出
+            <a class="btn btn-warning auditBtn" onclick="startAudit()" >
+                <i class="fa fa-download"></i> 发起审核
             </a>
         </div>
 
@@ -196,7 +196,34 @@
                 }]
         };
         $.table.init(options);
+
+        //发起审核的按钮
+        $("#bootstrap-table").on("check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table load-success.bs.table",
+            function () {
+                //下架才能进行修改
+                var rows = $.table.selectColumns("carPackage");
+                if(rows.length==1 && rows[0]==1){
+                    //是套餐且状态为初始化或者拒绝
+                    var auditStatus = $.table.selectColumns("auditStatus")[0];
+                    console.log(auditStatus==0);
+                    if(auditStatus==0 || auditStatus==3){
+                        $(".auditBtn").removeClass("disabled");
+                        return;
+                    }
+                }
+                $(".auditBtn").addClass("disabled");
+            });
     });
+
+    function startAudit(){
+        //发起审核：必须是套餐，初始化状态才能发起审核
+        var rows = $.table.selectColumns("id");
+        if (rows.length == 1){
+            $.modal.open("发起审核", prefix + "/auditPage?id="+rows[0]);
+        }else {
+            $.modal.alertWarning("只能选择一条数据");
+        }
+    }
 </script>
 </body>
 </html>

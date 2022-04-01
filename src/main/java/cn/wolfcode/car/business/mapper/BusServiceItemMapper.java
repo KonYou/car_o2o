@@ -1,8 +1,10 @@
 package cn.wolfcode.car.business.mapper;
 
+import cn.wolfcode.car.base.domain.User;
 import cn.wolfcode.car.business.domain.BusServiceItem;
 import cn.wolfcode.car.business.domain.Customer;
 import cn.wolfcode.car.business.query.BusServiceItemQuery;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,4 +26,6 @@ public interface BusServiceItemMapper {
     void takeDown(int valueOf);
 
     void shelfOn(int valueOf);
+
+    void changeAuditStatus(@Param("id") Long id, @Param("auditstatus") Integer auditstatusAuditing);
 }

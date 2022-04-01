@@ -1,8 +1,10 @@
 package cn.wolfcode.car.business.service;
 
+import cn.wolfcode.car.base.domain.User;
 import cn.wolfcode.car.business.domain.BusServiceItem;
 import cn.wolfcode.car.business.query.BusServiceItemQuery;
 import cn.wolfcode.car.common.base.page.TablePageInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -54,4 +56,9 @@ public interface IBusServiceItemService {
     void takeDown(String id);
 
     void shelfOn(String id);
+
+    void startAudit(Long id, Long bpmnInfoId,Long director, Long finance, String info);
+
+    //修改审核状态
+    void changeAuditStatus(Long id, Integer auditstatus);
 }
