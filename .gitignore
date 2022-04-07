@@ -1,6 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 
-# Operating System Files
+# Operating System Files  设置git的忽略规则（不要上传这些文件到远程仓库）
 
 *.DS_Store
 Thumbs.db
